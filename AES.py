@@ -25,4 +25,5 @@ for i in range(0, int("ff", 16)+1, 20):
 	ciphertext = cipher_enc.encrypt(message)
 	print 'Encoded string: {}'.format(binascii.hexlify(ciphertext))
 	print 'Decoded string: {}'.format(cipher_dec.decrypt(ciphertext))
-	print ""
+	print "----------------------------------------------------------"
+
