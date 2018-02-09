@@ -1,7 +1,6 @@
 #!/usr/bin/python
 from Crypto.Cipher import AES
 import os
-import sys
 import binascii
 from private_data import LoginCredentials
 
