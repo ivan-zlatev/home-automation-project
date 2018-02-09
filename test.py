@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import CLASS
+import pythonScripts.CLASS as CLASS
 import mysqlDB
 
 def initializeSensors(): # DEFINE ROOMS/DEVICES/SENSORS

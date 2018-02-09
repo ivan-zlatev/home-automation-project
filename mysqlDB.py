@@ -2,7 +2,7 @@
 
 import MySQLdb
 import time
-from private_data import LoginCredentials # import credentials
+from pythonScripts.private_data import LoginCredentials # import credentials
 
 db = MySQLdb.connect(	host=LoginCredentials['mysql_host'],
 			user=LoginCredentials['mysql_username'],
