@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import pythonScripts.CLASS as CLASS
-import mysqlDB
+import pythonScripts.MySQL as MySQL
 
 def initializeSensors(): # DEFINE ROOMS/DEVICES/SENSORS
 	rooms = { #	<room name>		<device/arduino name>			<device/arduino/parent address>
@@ -72,7 +72,7 @@ def setZeroValuesForAllSensors( sensors ):
 		for room in sensors:
 			for device in sensors[room]:
 				for sensor in device.getSensors():
-					mysqlDB.addNewRecord( sensor.getParentAddress(), sensor.getAddress(), sensor.getData() )
+					MySQL.addRecord( sensor.getParentAddress(), sensor.getAddress(), sensor.getData() )
 		return True
 	except:
 		print "Something went terribly wrong :)"
@@ -82,7 +82,7 @@ def readSensorValuesFromDB( sensors ):
 	for room in sensors:
 		for device in sensors[room]:
 			for sensor in device.getSensors():
-				sensor.updateData( mysqlDB.readRecord( sensor.getParentAddress(), sensor.getAddress() )[3] )
+				sensor.updateData( MySQL.readRecord( sensor.getParentAddress(), sensor.getAddress() )[3] )
 
 def main():
 	sensors = initializeSensors()

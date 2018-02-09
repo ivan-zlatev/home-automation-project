@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import MySQLdb
+import sys
 from private_data import LoginCredentials # import credentials
 
 try:
@@ -9,33 +10,41 @@ try:
 			user=LoginCredentials['mysql_username'],
 			passwd=LoginCredentials['mysql_password'],
 		) # connect to the MySQL server
+	print "Connected to the MySQL server ..."
 except:
-	print "Could not connect to the MySQL database"
-	return False
+	print "Could not connect to the MySQL server"
+	sys.exit(0)
 try:
-	cursor	= db.cursor()
-	sql	= "CREATE DATABASE " + LoginCredentials['mysql_db'] # Create a new database
+	cursor		= db.cursor()
+	sql		= "CREATE DATABASE " + LoginCredentials['mysql_db'] # Create a new database
 	cursor.execute(sql)
+	print "Created MySQL database [{}] ...".format(LoginCredentials['mysql_db'])
 except:
 	print "Could not create database entry"
-	return False
+	sys.exit(0)
 try:
 	db.select_db(LoginCredentials['mysql_db']) # USE that database
-	cursor	= db.cursor()
-	table	= LoginCredentials['mysql_table']
-	sql	= "CREATE TABLE " + table + "( epoch int, parent_id int, sensor_id int, sensor_data int )"
+	cursor		= db.cursor()
+	sql		= "CREATE TABLE " + LoginCredentials['mysql_table_data'] + "( epoch int, address smallint, data int )"
 	cursor.execute(sql)
 	db.commit()
-	return True
+	print "Created data table [{}] ...".format(LoginCredentials['mysql_table_data'])
 except:
-	print "Could not create table entry"
-	return False
+	print "Could not create data table entry"
+	sys.exit(0)
+try:
+	cursor		= db.cursor()
+	sql		= "CREATE TABLE " + LoginCredentials['mysql_table_ledger'] + "( id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, name varchar(255) )"
+	cursor.execute(sql)
+	db.commit()
+	print "Created ledger table [{}] ...".format(LoginCredentials['mysql_table_ledger'])
+except:
+	print "Could not create ledger table entry"
+	sys.exit(0)
 
 # The columns are as follows:
-#
 #	epoch		epoch time when the data was collected
 #	parent_id	parent address (arduino address) [0-255]
 #	sensor_id	sensor address [0-255]
 #	sensor_data	sensor data [0-65535]
-#
 
