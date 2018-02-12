@@ -1,5 +1,7 @@
 #!/usr/bin/python
 import MySQL
+#import nrf24 # from https://github.com/jpbarraca/pynrf24
+#import spidev
 
 def populateLedger():
 	# Create control devices
