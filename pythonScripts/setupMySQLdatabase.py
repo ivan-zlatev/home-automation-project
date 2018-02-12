@@ -43,8 +43,11 @@ except:
 	sys.exit(0)
 
 # The columns are as follows:
-#	epoch		epoch time when the data was collected
-#	parent_id	parent address (arduino address) [0-255]
-#	sensor_id	sensor address [0-255]
-#	sensor_data	sensor data [0-65535]
+#	data table:
+#		epoch		epoch time when the entry was collected
+#		address		sensor address [0-255]
+#		data		sensor data [0-65535]
+#	ledger table:
+#		id		sensor address [0-255]
+#		name		sensor information [varchar/string]
 

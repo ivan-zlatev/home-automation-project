@@ -1,9 +1,9 @@
 #!/usr/bin/python
-import CLASS as CLASS
 import MySQL
 
 def populateLedger():
 	# Create control devices
+	sensors = {}
 	for name in [
 			'ROOM 1: Stepper motor',
 			'ROOM 2: Light meter',
@@ -28,16 +28,6 @@ def populateLedger():
 			'ROOM 6: Lighting status',
 			'ROOM 6: Lighting PWM',
 		]:
-		MySQL.addSensor( name )
-
-def setZeroValuesForAllSensors( sensors ):
-	try:
-		for room in sensors:
-			for device in sensors[room]:
-				for sensor in device.getSensors():
-					MySQL.addRecord( sensor.getParentAddress(), sensor.getAddress(), sensor.getData() )
-		return True
-	except:
-		print "Something went terribly wrong :)"
-		return False
+		sensorAddress = MySQL.addSensor( name )
+		MySQL.addData( sensorAddress, 0 )
 
