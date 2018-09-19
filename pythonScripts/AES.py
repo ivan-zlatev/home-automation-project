@@ -4,22 +4,28 @@ import os
 import binascii
 from private_data import LoginCredentials
 
-def decryptMessage( message ):
+def decryptMessage( message, debug=False ):
 	try:
 		cipher	= AES.new(LoginCredentials['AES_SECRET'], AES.MODE_CBC, LoginCredentials['AES_IV'])
+		if debug:
+			print "Created cipher with the following credentials:\n\tAES_SECRET: '{}'\n\tMODE_CBC: '{}'\n\tAES_IV: '{}'".format(LoginCredentials['AES_SECRET'], AES.MODE_CBC, LoginCredentials['AES_IV'])
 	except:
 		print "Could not initialize AES cipher"
 		return False
 	try:
 		decodedMessage = '{}'.format(cipher.decrypt(message))
+		if debug:
+			print "Decoded message: {}'".format(decodedMessage)
 		return [ int(decodedMessage[10:12], 16), int(decodedMessage[12:], 16) ]
 	except:
 		print "Could not decrypt message"
 		return False
 
-def encryptMessage( sensor_addr, sensor_data ):
+def encryptMessage( sensor_addr, sensor_data, debug=False ):
 	try:
 		cipher	= AES.new(LoginCredentials['AES_SECRET'], AES.MODE_CBC, LoginCredentials['AES_IV'])
+		if debug:
+			print "Created cipher with the following credentials:\n\tAES_SECRET: '{}'\n\tMODE_CBC: '{}'\n\tAES_IV: '{}'".format(LoginCredentials['AES_SECRET'], AES.MODE_CBC, LoginCredentials['AES_IV'])
 	except:
 		print "Could not initialize AES cipher"
 		return False
@@ -29,6 +35,12 @@ def encryptMessage( sensor_addr, sensor_data ):
 		PRNG		= binascii.hexlify(os.urandom(5))
 		message		= PRNG + sensor_addr + sensor_data
 		message		= message.zfill(16)
+		if debug:
+			print "Created a message ready for encryption:"
+			print "\taddr: '{}'".format(sensor_addr)
+			print "\tdata: '{}'".format(sensor_data)
+			print "\tPRNG: '{}'".format(PRNG)
+			print "\tmsg:  '{}'".format(message)
 	except:
 		print "Could not create message"
 		return False
