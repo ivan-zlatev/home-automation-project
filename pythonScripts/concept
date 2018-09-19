@@ -1,0 +1,28 @@
+
+CLIENT -> SERVER comms contain <client_data> that is stored on the server side (mysql) later to be read/viewed via PHP/mysql/whatever
+	ex1. client is a humidity/temperature sensor that sends its data
+SERVER -> CLIENT comms contain <client_data> that should affect in some way the client
+	ex1. client is a light dimmer and <client_data> is 0-255 PWM information
+	ex2. servers is pooling the client for data (xxFF call)
+
+
+client1	<->
+client2	<-> RPi(python) -> RPi(mysql)
+client3	<->
+...	<->
+
+			RPi(php) <- RPi(mysql)
+
+
+!!! clients talk(somehow)(two-way comm)[nrf24l01?] to server(RPi) in encoded messages that contain <client_id> and <client_data>
+
+every client has a unique 4-byte address split in 2-byte chunks
+	xxFF should be the client device address
+	FFxx should be the sensor address attached to that client
+	"xxFF" should be reserved for client pooling (requesting the data for all available sensors on that client)
+		ex.
+		arduino1 is 02 and all sensors connected to it have addresses starting with 02xx
+		arduino2 is F5 and all sensors connected to it have addresses starting with F5xx
+
+
+

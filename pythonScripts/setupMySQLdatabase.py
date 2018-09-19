@@ -25,7 +25,7 @@ except:
 try:
 	db.select_db(LoginCredentials['mysql_db']) # USE that database
 	cursor		= db.cursor()
-	sql		= "CREATE TABLE " + LoginCredentials['mysql_table_data'] + "( epoch int, address smallint, data int )"
+	sql		= "CREATE TABLE " + LoginCredentials['mysql_table_data'] + "( epoch int, client smallint, address smallint, data int )"
 	cursor.execute(sql)
 	db.commit()
 	print "Created data table [{}] ...".format(LoginCredentials['mysql_table_data'])
@@ -34,7 +34,7 @@ except:
 	sys.exit(0)
 try:
 	cursor		= db.cursor()
-	sql		= "CREATE TABLE " + LoginCredentials['mysql_table_ledger'] + "( id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, name varchar(255) )"
+	sql		= "CREATE TABLE " + LoginCredentials['mysql_table_ledger'] + "( client smallint, address smallint, name varchar(255) )"
 	cursor.execute(sql)
 	db.commit()
 	print "Created ledger table [{}] ...".format(LoginCredentials['mysql_table_ledger'])
@@ -45,9 +45,11 @@ except:
 # The columns are as follows:
 #	data table:
 #		epoch		epoch time when the entry was collected
+#		client		client address [0-255]
 #		address		sensor address [0-255]
 #		data		sensor data [0-65535]
 #	ledger table:
-#		id		sensor address [0-255]
+#		client		client address [0-255]
+#		address		sensor address [0-255]
 #		name		sensor information [varchar/string]
 
