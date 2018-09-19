@@ -12,7 +12,7 @@ def decryptMessage( message ):
 		return False
 	try:
 		decodedMessage = '{}'.format(cipher.decrypt(message))
-		return [ int(decodedMessage[10:12]), int(decodedMessage[12:]) ]
+		return [ int(decodedMessage[10:12], 16), int(decodedMessage[12:], 16) ]
 	except:
 		print "Could not decrypt message"
 		return False
