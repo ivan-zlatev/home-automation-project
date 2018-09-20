@@ -39,7 +39,7 @@ def addSensor( client, address, name ):
 
 def getSensor( client, address ):
 	try:
-		sql	= "SELECT name FROM " + LoginCredentials['mysql_table_ledger'] + " WHERE address = " + str(int(str(address), 16)) + " AND client = " + str(int(str(client), 16)) + " ORDER BY id DESC"
+		sql	= "SELECT name FROM " + LoginCredentials['mysql_table_ledger'] + " WHERE address = " + str(int(str(address), 16)) + " AND client = " + str(int(str(client), 16)) + ""
 		cursor.execute(sql)
 		return cursor.fetchone()[0]
 	except:
